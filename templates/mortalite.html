@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphiques de la table de mortalité</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 32px 24px 24px 24px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .desc {
+            text-align: center;
+            color: #555;
+            margin-bottom: 32px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 32px;
+        }
+        th, td {
+            padding: 12px 8px;
+            text-align: center;
+        }
+        th {
+            background: #2c3e50;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f0f4f8;
+        }
+        tr:hover {
+            background: #e3eaf2;
+        }
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+        }
+        .btn-home {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 28px;
+            background: #2c3e50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-home:hover {
+            background: #1a232c;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 12px 2vw;
+            }
+            th, td {
+                padding: 8px 2px;
+                font-size: 0.95em;
+            }
+            .graph-container {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analyse de la table de mortalité</h1>
+        <div class="desc">
+            Visualisation des données de survie et d'espérance de vie par tranche d'âge.<br>
+            Pour un effectif initial de 100 000 naissances, les données étant sur 2 ans.
+        </div>
+
+        <h2 style="text-align:center; color:#2c3e50;">Nombre de survivants par tranche de 5 ans de 2020 à 2022</h2>
+        <div class="graph-container">
+            {{ survie_plot | safe }}
+        </div>
+
+        <h2 style="text-align:center; color:#2c3e50;">Espérance de vie selon l'âge de 2020 à 2022</h2>
+        <div class="graph-container">
+            {{ esperance_plot | safe }}
+        </div>
+
+        <h2 style="text-align:center; color:#2c3e50;">Table de mortalité de 2020 à 2022</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Âge</th>
+                    <th>Survivants</th>
+                    <th>Espérance de vie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                <tr>
+                    <td>{{ row['Âge'] }}</td>
+                    <td>{{ "%.0f"|format(row['Survivants']) }}</td>
+                    <td>{{ "%.1f"|format(row['Espérance de vie']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="btn-home">&#8592; Retour à l'accueil</a>
+    </div>
+</body>
+</html> 
