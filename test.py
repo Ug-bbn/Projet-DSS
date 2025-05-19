@@ -190,7 +190,6 @@ def upload_demo():
 
 @app.route('/upload_mortalite', methods=['POST'])
 def upload_mortalite():
-    # Pour l'instant, tu peux copier la logique de /upload ou mettre un message temporaire
     return mortalite()
 
 if __name__ == '__main__':
